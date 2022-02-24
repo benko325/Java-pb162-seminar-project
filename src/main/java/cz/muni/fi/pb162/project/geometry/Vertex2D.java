@@ -5,7 +5,8 @@
 package cz.muni.fi.pb162.project.geometry;
 
 /**
- *
+ * Class for making 2D Vertex objects with coordinates x and y.
+ * 
  * @author Benjamin Havlik, 514493
  */
 public class Vertex2D {
@@ -28,13 +29,31 @@ public class Vertex2D {
         this.y = y;
     }
     
+    /**
+     * Get the info about vertex coordinates.
+     *
+     * @return text output of parameters x and y of vertex in format [x, y]
+     */
+    
     public String getInfo() {
         return "[" + this.x + ", " + this.y + "]";
     }
     
+    /**
+     * Get the summary of vertex coordinates.
+     *
+     * @return summary of coordinates x and y
+     */
+    
     public double sumCoordinates() {
         return this.x + this.y;
     }
+    
+    /**
+     * Takes another 2D point and shifts the vertex by its coordinates.
+     *
+     * @param vertex    contains coordinates that will be used to shift original vertex
+     */
     
     public void move(Vertex2D vertex) {
         this.x += vertex.x;

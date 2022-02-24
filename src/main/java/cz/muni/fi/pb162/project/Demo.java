@@ -11,6 +11,8 @@ public class Demo {
 
     /**
      * Runs the code.
+     * Creates 2 vertices with coordinates [2, 3] and [1, 1].
+     * Then moves the first vertex by the coordinates of the second vertex and prints information about both vertices.
      *
      * @param args command line arguments, will be ignored
      */
