@@ -1,10 +1,11 @@
 package cz.muni.fi.pb162.project;
+import cz.muni.fi.pb162.project.geometry.Vertex2D;
 
 
 /**
  * Class for running main method.
  *
- * @author TODO: put your name here
+ * @author Benjamin Havlik, 514493
  */
 public class Demo {
 
@@ -15,7 +16,17 @@ public class Demo {
      */
     public static void main(String[] args) {
 
-        System.out.println("Hello world!");
+        Vertex2D v1 = new Vertex2D();
+        v1.setX(2.0);
+        v1.setY(3.0);
+        
+        Vertex2D v2 = new Vertex2D();
+        v2.setX(1.0);
+        v2.setY(1.0);
+        
+        v1.move(v2);
+        System.out.println(v1.getInfo());
+        System.out.println(v2.getInfo());
 
     }
 }
