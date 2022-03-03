@@ -7,11 +7,22 @@ package cz.muni.fi.pb162.project.geometry;
 /**
  * Class for making 2D Vertex objects with coordinates x and y.
  * 
- * @author Benjamin Havlik, 514493
+ * @author Benjamin Havlik
  */
 public class Vertex2D {
-    private double x = 0.0;
-    private double y = 0.0;
+    private double x;
+    private double y;
+    
+    /**
+    * Constructor of a Vertex2D objects.
+    * 
+    * @param x  first coordinate of a vertex
+    * @param y  second coordinate of a vertex
+    */
+    public Vertex2D(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
     
     public double getX() {
         return this.x;
@@ -35,30 +46,23 @@ public class Vertex2D {
      * @return text output of parameters x and y of vertex in format [x, y]
      */
     
-    public String getInfo() {
+    @Override
+    public String toString() {
         return "[" + this.x + ", " + this.y + "]";
     }
     
     /**
-     * Get the summary of vertex coordinates.
+     * Create a new vertex with coordinates which are in the middle of coordinates of actual vertex and secondVertex.
      *
-     * @return summary of coordinates x and y
+     * @param secondVertex  is used to calculate the new middle vertex, can not be null
+     * @return  new vertex with coordinates in the middle of actual vertex and secondVertex
      */
     
-    public double sumCoordinates() {
-        return this.x + this.y;
-    }
-    
-    /**
-     * Takes another 2D point and shifts the vertex by its coordinates.
-     *
-     * @param vertex    contains coordinates that will be used to shift original vertex
-     */
-    
-    public void move(Vertex2D vertex) {
-        this.x += vertex.x;
-        this.y += vertex.y;
-        //setX(getX() + vertex.getX());
-        //setY(getY() + vertex.getY());
+    public Vertex2D createMiddle(Vertex2D secondVertex) {
+        
+        return new Vertex2D(
+                (this.x + secondVertex.x) / 2.0,
+                (this.y + secondVertex.y) / 2.0
+        );
     }
 }
