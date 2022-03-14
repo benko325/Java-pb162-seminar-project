@@ -10,8 +10,8 @@ package cz.muni.fi.pb162.project.geometry;
  * @author Benjamin Havlik
  */
 public class Triangle {
-    private Vertex2D[] vertices = new Vertex2D[3];
-    private Triangle[] subTriangles = new Triangle[3];
+    private final Vertex2D[] vertices = new Vertex2D[3];
+    private final Triangle[] subTriangles = new Triangle[3];
     
     /**
     * Constructor of a Triangle objects.
@@ -25,6 +25,20 @@ public class Triangle {
         this.vertices[0] = firstVertex;
         this.vertices[1] = secondVertex;
         this.vertices[2] = thirdVertex;
+    }
+    
+    /**
+     * Constructor of a Sierpiński Triangle objects.
+     * 
+     * @param firstVertex   first vertice of a triangle
+     * @param secondVertex  second vertice of a triangle
+     * @param thirdVertex   third vertice of a triangle
+     * @param depth         specifies the depth of the division of the triangle
+     */
+    
+    public Triangle(Vertex2D firstVertex, Vertex2D secondVertex, Vertex2D thirdVertex, int depth) {
+        this(firstVertex, secondVertex, thirdVertex);
+        this.divide(depth);
     }
     
     /**
@@ -43,22 +57,6 @@ public class Triangle {
         return this.vertices[index];
         
         //return (index < 0 || index >= this.vertices.length) ? null : this.vertices[index]
-    }
-    
-    /**
-     * Change a vertex at vertices[index] to a given vertice in argument vertex.
-     * If the index is less than 0 or greather than length of array vertices, does nothing.
-     * 
-     * @param index     is used to identify a concrete vertice of a triangle
-     * @param vertex    is used to be stored at the vertices[index]
-     */
-    
-    public void setVertex(int index, Vertex2D vertex) {
-        if (index < 0 || index >= this.vertices.length) {
-            return;
-        }
-        
-        this.vertices[index] = vertex;
     }
     
     @Override
@@ -100,6 +98,25 @@ public class Triangle {
     }
     
     /**
+     * Divide the triangle into the 3 smaller triangles and store those triangles into the parameter subTriangles.
+     * Then, if the depth parameter is greather than 0, it recursively tries to split 
+     * the resulting sub-triangles until reaching the requested depth.
+     * 
+     * @param depth specifies the depth of the division
+     */
+    
+    public void divide(int depth) {
+        if (depth <= 0) {
+            return;
+        }
+        
+        this.divide();
+        for (int i = 0; i < 3; i++) {
+            this.subTriangles[i].divide(depth - 1);
+        }
+    }
+    
+    /**
      * Get the subtriangle from parameter subTriangle[index].
      * If the index is less than 0 or greather than length of array subTriangles, returns null.
      * 
@@ -118,5 +135,23 @@ public class Triangle {
         }
         
         return this.subTriangles[index];
+    }
+    
+    public static final double TOLERATED_DEVIATION = 0.001;
+    
+    /**
+     * Check if the triangle is equilateral or not.
+     * 
+     * @return true if the triangle is equilateral, else false
+     */
+    
+    public boolean isEquilateral() {
+        double firstSide = vertices[0].distance(vertices[1]);
+        double secondSide = vertices[0].distance(vertices[2]);
+        double thirdSide = vertices[1].distance(vertices[2]);
+        
+        return Math.abs(firstSide - secondSide) < TOLERATED_DEVIATION &&
+                Math.abs(firstSide - thirdSide) < TOLERATED_DEVIATION &&
+                Math.abs(secondSide - thirdSide) < TOLERATED_DEVIATION; 
     }
 }

@@ -10,8 +10,8 @@ package cz.muni.fi.pb162.project.geometry;
  * @author Benjamin Havlik
  */
 public class Vertex2D {
-    private double x;
-    private double y;
+    private final double x;
+    private final double y;
     
     /**
     * Constructor of a Vertex2D objects.
@@ -28,16 +28,8 @@ public class Vertex2D {
         return this.x;
     }
     
-    public void setX(double x) {
-        this.x = x;
-    }
-    
     public double getY() {
         return this.y;
-    }
-    
-    public void setY(double y) {
-        this.y = y;
     }
     
     /**
@@ -64,5 +56,25 @@ public class Vertex2D {
                 (this.x + secondVertex.x) / 2.0,
                 (this.y + secondVertex.y) / 2.0
         );
+    }
+    
+    /**
+     * Calculate distance between 2 vertices.
+     * 
+     * @param secondVertex is used for calculate distance between 2 vertices
+     * @return distance between actual vertex and secondVertex
+     */
+    
+    public double distance(Vertex2D secondVertex) {
+        if (secondVertex == null) {
+            return -1.0;
+        }
+        
+        double distX = (this.getX() - secondVertex.getX()) * (this.getX() - secondVertex.getX());
+        double distY = (this.getY() - secondVertex.getY()) * (this.getY() - secondVertex.getY());
+        
+        double dist = Math.sqrt(distX + distY);
+        
+        return dist;
     }
 }
