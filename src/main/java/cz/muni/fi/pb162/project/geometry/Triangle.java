@@ -4,12 +4,14 @@
  */
 package cz.muni.fi.pb162.project.geometry;
 
+import cz.muni.fi.pb162.project.utils.SimpleMath;
+
 /**
  * Class for making a Triangle objects with 3 vertices stored in an attribute "vertices".
  * 
  * @author Benjamin Havlik
  */
-public class Triangle {
+public class Triangle implements Measurable {
     private final Vertex2D[] vertices = new Vertex2D[3];
     private final Triangle[] subTriangles = new Triangle[3];
     
@@ -153,5 +155,15 @@ public class Triangle {
         return Math.abs(firstSide - secondSide) < TOLERATED_DEVIATION &&
                 Math.abs(firstSide - thirdSide) < TOLERATED_DEVIATION &&
                 Math.abs(secondSide - thirdSide) < TOLERATED_DEVIATION; 
+    }
+    
+    @Override
+    public double getWidth() {
+        return SimpleMath.maxX(this) - SimpleMath.minX(this);
+    }
+    
+    @Override
+    public double getHeight() {
+        return SimpleMath.maxY(this) - SimpleMath.minY(this);
     }
 }
