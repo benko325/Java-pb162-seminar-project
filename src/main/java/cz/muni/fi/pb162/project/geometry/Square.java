@@ -9,9 +9,7 @@ package cz.muni.fi.pb162.project.geometry;
  * 
  * @author Benjamin Havlik
  */
-public class Square implements Circular {
-    private Vertex2D center;
-    private double diameter;
+public class Square extends GeneralRegularPolygon {
     
     /**
      * Constructor of a Square objects which takes 2 arguments - center and diameter.
@@ -20,8 +18,7 @@ public class Square implements Circular {
      * @param diameter  defines the value of a diameter
      */
     public Square(Vertex2D center, double diameter) {
-        this.center = center;
-        this.diameter = diameter;
+        super(center, 4, diameter / 2);
     }
     
     /**
@@ -31,45 +28,6 @@ public class Square implements Circular {
      */
     public Square(Circular circular) {
         this(circular.getCenter(), circular.getRadius() * 2);
-    }
-    
-    @Override
-    public Vertex2D getCenter() {
-        return this.center;
-    }
-    
-    @Override
-    public double getRadius() {
-        return this.diameter / 2;
-    }
-    
-    /**
-     * Returns the coordinates of the index-th vertex.
-     * 
-     * @param index defines the index of a concrete vertex
-     * @return      null if the index is invalid, else required vertex
-     */
-    public Vertex2D getVertex(int index) {
-        if (index < 0 || index > 3) {
-            return null;
-        }
-        
-        switch (index) {
-            case 0:
-                return new Vertex2D(this.center.getX() - this.getRadius(), 
-                        this.center.getY());
-            case 1:
-                return new Vertex2D(this.center.getX(), 
-                        this.center.getY() - this.getRadius());
-            case 2:
-                return new Vertex2D(this.center.getX() + this.getRadius(), 
-                        this.center.getY());
-            case 3:
-                return new Vertex2D(this.center.getX(), 
-                        this.center.getY() + this.getRadius());
-            default:
-                return null;
-        }
     }
     
     @Override
