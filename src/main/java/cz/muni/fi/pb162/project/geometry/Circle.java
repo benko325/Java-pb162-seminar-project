@@ -9,10 +9,8 @@ package cz.muni.fi.pb162.project.geometry;
  * 
  * @author Benjamin Havlik
  */
-public class Circle implements Measurable, Circular {
-    private final Vertex2D center;
-    private final double radius;
-    
+public class Circle extends GeneralRegularPolygon {
+
     /**
      * Constructor of a Circle objects without parameters.
      */
@@ -29,32 +27,17 @@ public class Circle implements Measurable, Circular {
      */
     
     public Circle(Vertex2D center, double radius) {
-        this.center = center;
-        this.radius = radius;
+        super(center, Integer.MAX_VALUE, radius);
+        this.setColor(Color.RED);
     }
 
     @Override
-    public Vertex2D getCenter() {
-        return this.center;
-    }
-    
-    @Override
-    public double getRadius() {
-        return this.radius;
-    }
-    
-    @Override
     public String toString() {
-        return "Circle: center=" + center + ", radius=" + radius;
+        return "Circle: center=" + this.getCenter() + ", radius=" + this.getRadius();
     }
     
     @Override
-    public double getWidth() {
-        return this.radius * 2;
-    }
-    
-    @Override
-    public double getHeight() {
-        return this.getWidth();
+    public double getEdgeLength() {
+        return 0.0;
     }
 }
