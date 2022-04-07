@@ -14,7 +14,6 @@ public class Circle extends GeneralRegularPolygon {
     /**
      * Constructor of a Circle objects without parameters.
      */
-    
     public Circle() {
         this(new Vertex2D(0.0, 0.0), 1.0);
     }
@@ -25,7 +24,6 @@ public class Circle extends GeneralRegularPolygon {
      * @param center defines the coordinates of a circle center
      * @param radius defines the radius of a circle 
      */
-    
     public Circle(Vertex2D center, double radius) {
         super(center, Integer.MAX_VALUE, radius);
         this.setColor(Color.RED);

@@ -20,5 +20,4 @@ public interface Circular {
      * @return circle's radius
      */
     double getRadius();
-
 }

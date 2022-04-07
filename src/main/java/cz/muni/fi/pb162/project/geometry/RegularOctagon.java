@@ -10,6 +10,7 @@ package cz.muni.fi.pb162.project.geometry;
  * @author Benjamin Havlik
  */
 public class RegularOctagon extends GeneralRegularPolygon {
+    
     /**
      * Constructor of a RegularOctagon objects.
      * 
