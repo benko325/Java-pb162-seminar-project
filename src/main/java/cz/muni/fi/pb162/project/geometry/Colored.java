@@ -10,6 +10,7 @@ package cz.muni.fi.pb162.project.geometry;
  * @author Benjamin Havlik
  */
 public interface Colored {
+    
     /**
      * Returns object's color.
      * 

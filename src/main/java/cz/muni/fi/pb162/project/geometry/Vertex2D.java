@@ -37,7 +37,6 @@ public class Vertex2D {
      *
      * @return text output of parameters x and y of vertex in format [x, y]
      */
-    
     @Override
     public String toString() {
         return "[" + this.x + ", " + this.y + "]";
@@ -49,7 +48,6 @@ public class Vertex2D {
      * @param secondVertex  is used to calculate the new middle vertex, can not be null
      * @return  new vertex with coordinates in the middle of actual vertex and secondVertex
      */
-    
     public Vertex2D createMiddle(Vertex2D secondVertex) {
         
         return new Vertex2D(
@@ -64,7 +62,6 @@ public class Vertex2D {
      * @param secondVertex is used for calculate distance between 2 vertices
      * @return distance between actual vertex and secondVertex
      */
-    
     public double distance(Vertex2D secondVertex) {
         if (secondVertex == null) {
             return -1.0;
@@ -76,5 +73,25 @@ public class Vertex2D {
         double dist = Math.sqrt(distX + distY);
         
         return dist;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+       if (!(o instanceof Vertex2D)) {
+           return false;
+       }
+       
+       Vertex2D secondVertex = (Vertex2D) o;
+       
+       return this.x == secondVertex.x && this.y == secondVertex.y;
+    }
+    
+    @Override
+    public int hashCode() {
+        int result = 19;
+        result = (37 * result) + Double.valueOf(this.x).hashCode();
+        result = (37 * result) + Double.valueOf(this.y).hashCode();
+        
+        return result;
     }
 }
