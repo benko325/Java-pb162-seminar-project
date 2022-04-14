@@ -22,4 +22,5 @@ public interface Measurable {
      * @return object's height
      */
     double getHeight();
+
 }
