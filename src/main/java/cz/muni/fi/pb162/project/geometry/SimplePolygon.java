@@ -12,6 +12,27 @@ import cz.muni.fi.pb162.project.utils.SimpleMath;
  */
 public abstract class SimplePolygon implements Polygon {
     
+    /**
+     * Constructor of SimplePolygon used only by subclasses.
+     * 
+     * @param vertices defines vertices of a polygon
+     */
+    public SimplePolygon(Vertex2D[] vertices) {
+        if (vertices == null) {
+            throw new IllegalArgumentException("parameter vertices can not be null");
+        }
+        
+        if (vertices.length == 0) {
+            throw new IllegalArgumentException("parameter vertices can not be empty");
+        }
+        
+        for (Vertex2D vertice : vertices) {
+            if (vertice == null) {
+                throw new IllegalArgumentException("parameter vertices can not have a null pointer in itself");
+            }
+        }
+    }
+    
     @Override
     public double getHeight() {
         return SimpleMath.maxY(this) - SimpleMath.minY(this);
