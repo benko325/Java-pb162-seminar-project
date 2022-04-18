@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package cz.muni.fi.pb162.project.geometry;
+import java.util.Arrays;
 
 /**
  * Class for making (simple) ArrayPolygon objects with different number of vertices.
@@ -18,22 +19,8 @@ public class ArrayPolygon extends SimplePolygon {
      * @param vertices  defines vertices form which is a polygon made
      */
     public ArrayPolygon(Vertex2D[] vertices) {
-        if (vertices == null) {
-            throw new IllegalArgumentException("parameter vertices can not be null");
-        }
-        
-        if (vertices.length < 3) {
-            throw new IllegalArgumentException("parameter vertices must have at least 3 Vertex2D objects");
-        }
-        
-        for (Vertex2D vertice : vertices) {
-            if (vertice == null) {
-                throw new IllegalArgumentException("parameter vertices can not have a null in itself");
-            }
-        }
-        
-        this.vertices = new Vertex2D[vertices.length];
-        System.arraycopy(vertices, 0, this.vertices, 0, vertices.length);
+        super(vertices);        
+        this.vertices = Arrays.copyOf(vertices, vertices.length);
     }
     
     @Override
@@ -58,27 +45,11 @@ public class ArrayPolygon extends SimplePolygon {
         
         ArrayPolygon secondPolygon = (ArrayPolygon) o;
         
-        if (this.getNumVertices() != secondPolygon.getNumVertices()) {
-            return false;
-        }
-        
-        for (int i = 0; i < this.getNumVertices(); i++) {
-            if (!(this.getVertex(i).equals(secondPolygon.getVertex(i)))) {
-                return false;
-            }
-        }
-        
-        return true;
+        return Arrays.equals(this.vertices, secondPolygon.vertices);
     }
     
     @Override
     public int hashCode() {
-        int result = 23;
-        
-        for (int i = 0; i < this.getNumVertices(); i++) {
-            result = (41 * result) + this.getVertex(i).hashCode();
-        }
-        
-        return result;
+        return Arrays.hashCode(this.vertices);
     }
 }

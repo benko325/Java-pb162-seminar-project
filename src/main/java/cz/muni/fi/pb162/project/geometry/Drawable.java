@@ -52,5 +52,4 @@ public interface Drawable {
      */
     int uniqueVerticesAmount();
 
-
 }
