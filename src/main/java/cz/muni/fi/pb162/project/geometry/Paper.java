@@ -120,21 +120,13 @@ public class Paper implements Drawable, PolygonFactory {
                 Polygon polygonToDraw = this.tryToCreatePolygon(polygons.get(i));
                 this.drawPolygon(polygonToDraw);
                 counter += 1;
-            } catch(TransparentColorException tce) {
-                this.pencilColor = Color.BLACK;
-                if (i == polygons.size() - 1 && counter == 0) {
-                    throw new EmptyDrawableException("no polygon was drawn", tce);
+            } catch(TransparentColorException | MissingVerticesException | NullPointerException e) {
+                if (e.getClass() == TransparentColorException.class) {
+                    this.pencilColor = Color.BLACK;
                 }
-            } catch(MissingVerticesException | NullPointerException e) {
                 if (i == polygons.size() - 1 && counter == 0) {
                     throw new EmptyDrawableException("no polygon was drawn", e);
                 }
-            } catch(Exception e) {
-                if (i == polygons.size() - 1 && counter == 0) {
-                    throw new EmptyDrawableException("no polygon was drawn", e);
-                }
-                
-                throw e;
             }
         }
     }
