@@ -4,6 +4,7 @@
  */
 package cz.muni.fi.pb162.project.geometry;
 import cz.muni.fi.pb162.project.utils.SimpleMath;
+import cz.muni.fi.pb162.project.exception.MissingVerticesException;
 
 /**
  * Abstract class representing simple polygons.
@@ -22,8 +23,8 @@ public abstract class SimplePolygon implements Polygon {
             throw new IllegalArgumentException("parameter vertices can not be null");
         }
         
-        if (vertices.length == 0) {
-            throw new IllegalArgumentException("parameter vertices can not be empty");
+        if (vertices.length < 3) {
+            throw new MissingVerticesException("parameter vertices must have at least 3 vertices");
         }
         
         for (Vertex2D vertice : vertices) {
