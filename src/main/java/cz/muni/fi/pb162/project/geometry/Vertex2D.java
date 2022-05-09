@@ -9,7 +9,7 @@ package cz.muni.fi.pb162.project.geometry;
  * 
  * @author Benjamin Havlik
  */
-public class Vertex2D {
+public class Vertex2D implements Comparable<Vertex2D> {
     private final double x;
     private final double y;
     
@@ -93,5 +93,14 @@ public class Vertex2D {
         result = (37 * result) + Double.valueOf(this.y).hashCode();
         
         return result;
+    }
+    
+    @Override
+    public int compareTo(Vertex2D that) {
+        if (Double.compare(this.x, that.x) == 0) {
+            return Double.compare(this.y, that.y);
+        }
+        
+        return Double.compare(this.x, that.x);
     }
 }
