@@ -3,6 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package cz.muni.fi.pb162.project.geometry;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.BufferedWriter;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.SortedMap;
@@ -13,13 +25,14 @@ import java.util.Collections;
 import java.util.TreeSet;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Class representing polygons with named vertices.
  * 
  * @author Benjamin Havlik
  */
-public final class LabeledPolygon extends SimplePolygon implements Labelable, Sortable {
+public final class LabeledPolygon extends SimplePolygon implements Labelable, Sortable, PolygonWritable {
     private SortedMap<String, Vertex2D> vertices = new TreeMap<>();
     
     /**
@@ -27,7 +40,7 @@ public final class LabeledPolygon extends SimplePolygon implements Labelable, So
      * 
      * @author Benjamin Havlik
      */
-    public static class Builder implements Buildable {
+    public static class Builder implements Buildable, PolygonReadable {
         private SortedMap<String, Vertex2D> vertices = new TreeMap<>();
         
         /**
@@ -51,6 +64,40 @@ public final class LabeledPolygon extends SimplePolygon implements Labelable, So
         @Override
         public LabeledPolygon build() {
             return new LabeledPolygon(this.vertices);
+        }
+        
+        @Override
+        public Builder read(InputStream is) throws IOException {
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            Map<String, Vertex2D> helpMap = new HashMap<>();
+            
+            while (br.ready()) {
+                String[] line = br.readLine().split(" ", 3);
+                if (line.length < 3) {
+                    throw new IOException("too few arguments in line");
+                }
+                
+                try {
+                    double x = Double.parseDouble(line[0]);
+                    double y = Double.parseDouble(line[1]);
+                    String label = line[2];
+                    helpMap.put(label, new Vertex2D(x, y));
+                } catch (NullPointerException | NumberFormatException e) {
+                    throw new IOException(e);
+                }             
+            }
+            
+            this.vertices.putAll(helpMap);
+            return this;
+        }
+        
+        @Override
+        public Builder read(File file) throws IOException {
+            try (FileInputStream fis = new FileInputStream(file)) {
+                this.read(fis);
+            }
+            
+            return this;
         }
     }
     
@@ -135,4 +182,41 @@ public final class LabeledPolygon extends SimplePolygon implements Labelable, So
        return setToReturn;
     }
     
+    @Override
+    public void write(OutputStream os) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
+        for (Map.Entry<String, Vertex2D> vertice : this.vertices.entrySet()) {
+            String line = vertice.getValue().getX() + " " + 
+                    vertice.getValue().getY() + " " + vertice.getKey();
+            
+            bw.write(line);
+            bw.newLine();
+        }
+            
+        bw.flush();
+    }
+    
+    @Override
+    public void write(File file) throws IOException {
+       this.write(new FileOutputStream(file));
+    }
+    
+    /**
+     * Write a map in JSON format to the output stream.
+     * 
+     * @param os output stream to be written on
+     * @throws IOException on write error
+     */
+    public void writeJson(OutputStream os) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        
+        for (Map.Entry<String, Vertex2D> vertice : this.vertices.entrySet()) {
+            String json = gson.toJson(vertice);
+            bw.write(json);
+            bw.newLine();
+        }
+        
+        bw.flush();
+    }
 }
