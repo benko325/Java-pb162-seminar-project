@@ -198,7 +198,9 @@ public final class LabeledPolygon extends SimplePolygon implements Labelable, So
     
     @Override
     public void write(File file) throws IOException {
-       this.write(new FileOutputStream(file));
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            this.write(fos);
+        }
     }
     
     /**
