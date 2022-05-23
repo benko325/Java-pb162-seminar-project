@@ -20,7 +20,7 @@ public interface PolygonReadable {
      * @return the object reading the data
      * @throws IOException on read error
      */
-    PolygonReadable read(InputStream is) throws IOException;
+    LabeledPolygon.Builder read(InputStream is) throws IOException;
 
     /**
      * Read polygon data from file.
@@ -29,5 +29,5 @@ public interface PolygonReadable {
      * @return the object reading the data
      * @throws IOException on read error
      */
-    PolygonReadable read(File file) throws IOException;
+    LabeledPolygon.Builder read(File file) throws IOException;
 }
